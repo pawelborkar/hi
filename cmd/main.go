@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/fatih/color"
 	"os"
 	"os/exec"
 	"strings"
@@ -10,6 +11,10 @@ import (
 
 func main() {
 	commands := map[string]string{
+		"l3":   "xdg-open http://localhost:3000/",
+		"l5":   "xdg-open http://localhost:5000/",
+		"l55":  "xdg-open http://localhost:5050/",
+		"l8":   "xdg-open http://localhost:8000/",
 		"pn":   "pnpm",
 		"pa":   "pnpm add",
 		"pad":  "pnpm add -D",
@@ -27,13 +32,16 @@ func main() {
 		"drs":  "python manage.py runserver",
 		"dmm":  "python manage.py makemigrations",
 		"dm":   "python manage.py migrate",
-		"dt":   "python manage.py test",
+		"dsa":  "python manage.py startapp",
 		"dsh":  "python manage.py shell",
+		"dt":   "python manage.py test",
 		"dc":   "python manage.py check",
+		"dpm":  "python manage.py",
+		"epd":  "export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH",
 	}
 
 	if len(os.Args) < 2 {
-		fmt.Println("Usage: hi <command>")
+		color.Yellow("Usage: hi <command>")
 		os.Exit(1)
 	}
 
@@ -43,14 +51,13 @@ func main() {
 
 	// Give back the lastest version of hi
 	if (commandKey == "-v") || (commandKey == "version") || (commandKey == "--version") {
-		fmt.Println("version 0.3.1")
+		color.HiCyan("version 0.3.1")
 		return
 	}
 
 	if commandKey == "-add" {
-
 		reader := bufio.NewReader(os.Stdin)
-		fmt.Print("Enter the command (e.g. 'ga: git add -A'): ")
+		color.HiYellow("Enter the command (e.g. 'ga: git add -A'): ")
 		input, _ := reader.ReadString('\n')
 		input = strings.TrimSpace(input)
 
@@ -81,10 +88,10 @@ func main() {
 
 	if len(os.Args) == 3 {
 		fullCommand = fullCommand + " " + os.Args[2]
-		fmt.Printf("Executing %s\n", fullCommand)
+		color.Green("Executing %s\n", fullCommand)
 		executeCommand(fullCommand)
 	} else {
-		fmt.Printf("Executing %s\n", fullCommand)
+		color.HiGreen("Executing %s\n", fullCommand)
 		executeCommand(fullCommand)
 	}
 }
@@ -98,7 +105,7 @@ func executeCommand(command string) {
 	err := cmd.Run()
 
 	if err != nil {
-		fmt.Printf("Error executing command: %v\n", err)
+		color.Red("Error executing command: %v\n", err)
 		os.Exit(1)
 	}
 }
