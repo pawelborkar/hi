@@ -6,12 +6,14 @@ GOTEST=$(GOCMD) test
 GOGET=$(GOCMD) get
 
 MAIN_PACKAGE=./cmd
-
 BINARY_PATH=./bin
-
 BINARY_NAME=hi
 
-# Build the binary
+# Default target
+.DEFAULT_GOAL := build
+
+.PHONY: build clean deps run test local-install local-pipeline 
+
 build:
 	$(GOBUILD) -o ${BINARY_PATH}/$(BINARY_NAME) $(MAIN_PACKAGE)
 
@@ -25,8 +27,6 @@ test:
 run: build
 	${BINARY_PATH}/$(BINARY_NAME)
 
-.PHONY: deps
-
 # Get dependencies
 deps:
 	$(GOGET) ./...
@@ -34,5 +34,7 @@ deps:
 local-install:
 	cp ${BINARY_PATH}/$(BINARY_NAME) /usr/bin
 
-# Default target
-.DEFAULT_GOAL := build
+local-pipeline: clean build local-install
+	echo "Installed latest changes locally."
+
+

@@ -11,16 +11,18 @@ import (
 
 func main() {
 	commands := map[string]string{
+		"fd":   "fastapi dev",
+		"cm":   "mf",
+		"fget": "~/github/fastget/bin/main",
 		"l3":   "xdg-open http://localhost:3000/",
 		"l5":   "xdg-open http://localhost:5000/",
 		"l55":  "xdg-open http://localhost:5050/",
 		"l8":   "xdg-open http://localhost:8000/",
-		"pn":   "pnpm",
 		"pa":   "pnpm add",
 		"pad":  "pnpm add -D",
 		"puu":  "pnpm update; pnpm upgrade",
 		"pag":  "pnpm add -g ",
-		"pagu": "pnpm add -g pnpm",
+		"psu":  "pnpm self-update",
 		"pi":   "pnpm install",
 		"pd":   "pnpm run dev",
 		"ps":   "pnpm run start",
@@ -37,6 +39,9 @@ func main() {
 		"dt":   "python manage.py test",
 		"dc":   "python manage.py check",
 		"dpm":  "python manage.py",
+		"dcu":  "docker compose up",
+		"dps":  "docker ps",
+		"dimg": "docker images",
 		"epd":  "export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH",
 	}
 
@@ -51,7 +56,7 @@ func main() {
 
 	// Give back the lastest version of hi
 	if (commandKey == "-v") || (commandKey == "version") || (commandKey == "--version") {
-		color.HiCyan("version 0.3.1")
+		color.HiCyan("version 0.3.3")
 		return
 	}
 
@@ -86,17 +91,16 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Takes arguments from the user
 	if len(os.Args) == 3 {
 		fullCommand = fullCommand + " " + os.Args[2]
-		color.Green("Executing %s\n", fullCommand)
-		executeCommand(fullCommand)
-	} else {
-		color.HiGreen("Executing %s\n", fullCommand)
-		executeCommand(fullCommand)
 	}
+	color.HiGreen("Executing %s\n", fullCommand)
+	executeCommand(fullCommand)
 }
 
 func executeCommand(command string) {
+	// Executes the command in the shell/terminal
 
 	cmd := exec.Command("sh", "-c", command)
 	cmd.Stdout = os.Stdout
