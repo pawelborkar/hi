@@ -11,8 +11,11 @@ import (
 
 func main() {
 	commands := map[string]string{
-		"fd":   "fastapi dev",
+		"di":   "docker images",
+		"go":   "xdg-open https://github.com/pawelborkar?tab=repositories",
+		"grc":  "gh repo clone",
 		"cm":   "mf",
+		"fd":   "fastapi dev",
 		"fget": "~/github/fastget/bin/main",
 		"l3":   "xdg-open http://localhost:3000/",
 		"l5":   "xdg-open http://localhost:5000/",
@@ -56,7 +59,7 @@ func main() {
 
 	// Give back the lastest version of hi
 	if (commandKey == "-v") || (commandKey == "version") || (commandKey == "--version") {
-		color.HiCyan("version 0.3.3")
+		color.HiCyan("version 0.3.6")
 		return
 	}
 
@@ -91,17 +94,17 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Takes arguments from the user
+	// Takes agruments from the user
 	if len(os.Args) == 3 {
 		fullCommand = fullCommand + " " + os.Args[2]
 	}
-	color.HiGreen("Executing %s\n", fullCommand)
+
+	color.HiGreen("Executing: ")
+	color.HiYellow(fullCommand)
 	executeCommand(fullCommand)
 }
 
 func executeCommand(command string) {
-	// Executes the command in the shell/terminal
-
 	cmd := exec.Command("sh", "-c", command)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
