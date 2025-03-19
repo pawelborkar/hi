@@ -12,6 +12,8 @@ import (
 func main() {
 	commands := map[string]string{
 		"di":   "docker images",
+		"ca":   "cat package.json",
+		"vnew": "pnpm create vite . --template ",
 		"go":   "xdg-open https://github.com/pawelborkar?tab=repositories",
 		"grc":  "gh repo clone",
 		"cm":   "mf",
@@ -21,6 +23,11 @@ func main() {
 		"l5":   "xdg-open http://localhost:5000/",
 		"l55":  "xdg-open http://localhost:5050/",
 		"l8":   "xdg-open http://localhost:8000/",
+		"bd":   "bun dev",
+		"bs":   "bun start",
+		"bb":   "bun build",
+		"bl":   "bun lint",
+		"bf":   "bun format",
 		"pa":   "pnpm add",
 		"pad":  "pnpm add -D",
 		"puu":  "pnpm update; pnpm upgrade",
@@ -29,10 +36,13 @@ func main() {
 		"pi":   "pnpm install",
 		"pd":   "pnpm run dev",
 		"ps":   "pnpm run start",
+		"ys":   "yarn start",
+		"yd":   "yarn dev",
 		"psv":  "pnpm run serve",
 		"gi":   "git init",
-		"gs":   "git status",
 		"gl":   "git log --graph --decorate --all",
+		"gs":   "git status",
+		"grao": "git remote add origin",
 		"dasp": "django-admin startproject",
 		"drs":  "python manage.py runserver",
 		"dmm":  "python manage.py makemigrations",
@@ -42,9 +52,10 @@ func main() {
 		"dt":   "python manage.py test",
 		"dc":   "python manage.py check",
 		"dpm":  "python manage.py",
-		"dcu":  "docker compose up",
+		"dcu":  "docker compose up -d --build",
+		"dcls": "docker compose ls",
+		"dcps": "docker compose ps",
 		"dps":  "docker ps",
-		"dimg": "docker images",
 		"epd":  "export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH",
 	}
 
@@ -59,7 +70,7 @@ func main() {
 
 	// Give back the lastest version of hi
 	if (commandKey == "-v") || (commandKey == "version") || (commandKey == "--version") {
-		color.HiCyan("version 0.3.6")
+		color.HiCyan("version 0.3.9")
 		return
 	}
 
